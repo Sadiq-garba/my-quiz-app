@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<!-- saved from url=(0088)https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/ -->
+<html lang="en-US" prefix="og: http://ogp.me/ns#" class=" td-md-is-chrome"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Differences: $request-&gt;get() vs $request-&gt;input() vs request() vs get_data() - Laravel Daily</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="pingback" href="https://laraveldaily.com/xmlrpc.php">
+    
+<!-- This site is optimized with the Yoast SEO plugin v9.3 - https://yoast.com/wordpress/plugins/seo/ -->
+<link rel="canonical" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Differences: $request-&gt;get() vs $request-&gt;input() vs request() vs get_data() - Laravel Daily">
+<meta property="og:description" content="How do you handle POST data in your store() or update() methods? Seems like a simple question, but actually there are so many options!">
+<meta property="og:url" content="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/">
+<meta property="og:site_name" content="Laravel Daily">
+<meta property="article:tag" content="Validation">
+<meta property="article:section" content="Quick Tips">
+<meta property="article:published_time" content="2017-11-29T17:32:31+00:00">
+<meta property="article:modified_time" content="2018-12-20T07:21:28+00:00">
+<meta property="og:updated_time" content="2018-12-20T07:21:28+00:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="How do you handle POST data in your store() or update() methods? Seems like a simple question, but actually there are so many options!">
+<meta name="twitter:title" content="Differences: $request-&gt;get() vs $request-&gt;input() vs request() vs get_data() - Laravel Daily">
+<meta name="twitter:creator" content="@povilaskorop">
+<!-- / Yoast SEO plugin. -->
+
+<link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="Laravel Daily » Feed" href="https://laraveldaily.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Laravel Daily » Comments Feed" href="https://laraveldaily.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Laravel Daily » Differences: $request-&gt;get() vs $request-&gt;input() vs request() vs get_data() Comments Feed" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/feed/">
+		<script type="text/javascript" async="" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/analytics.js.download"></script><script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/laraveldaily.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.0.16"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])?!1:!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([55358,56760,9792,65039],[55358,56760,8203,9792,65039])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/wp-emoji-release.min.js.download" type="text/javascript" defer=""></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="wp-block-library-css" href="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/style.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="google-fonts-style-css" href="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/css" type="text/css" media="all">
+<link rel="stylesheet" id="td-theme-css" href="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/style.css" type="text/css" media="all">
+<script type="text/javascript" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/jquery.js.download"></script>
+<script type="text/javascript" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/jquery-migrate.min.js.download"></script>
+<link rel="https://api.w.org/" href="https://laraveldaily.com/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://laraveldaily.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://laraveldaily.com/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 5.0.16">
+<link rel="shortlink" href="https://laraveldaily.com/?p=1888">
+<link rel="alternate" type="application/json+oembed" href="https://laraveldaily.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Flaraveldaily.com%2Fdifferences-request-get-vs-request-input-vs-helper-vs-get_data%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://laraveldaily.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Flaraveldaily.com%2Fdifferences-request-get-vs-request-input-vs-helper-vs-get_data%2F&amp;format=xml">
+<!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script><![endif]-->
+    		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+		
+<!-- JS generated by theme -->
+
+<script>
+    
+    
+
+	    var tdBlocksArray = []; //here we store all the items for the current page
+
+	    //td_block class - each ajax block uses a object of this class for requests
+	    function tdBlock() {
+		    this.id = '';
+		    this.block_type = 1; //block type id (1-234 etc)
+		    this.atts = '';
+		    this.td_column_number = '';
+		    this.td_current_page = 1; //
+		    this.post_count = 0; //from wp
+		    this.found_posts = 0; //from wp
+		    this.max_num_pages = 0; //from wp
+		    this.td_filter_value = ''; //current live filter value
+		    this.is_ajax_running = false;
+		    this.td_user_action = ''; // load more or infinite loader (used by the animation)
+		    this.header_color = '';
+		    this.ajax_pagination_infinite_stop = ''; //show load more at page x
+	    }
+
+
+        // td_js_generator - mini detector
+        (function(){
+            var htmlTag = document.getElementsByTagName("html")[0];
+
+	        if ( navigator.userAgent.indexOf("MSIE 10.0") > -1 ) {
+                htmlTag.className += ' ie10';
+            }
+
+            if ( !!navigator.userAgent.match(/Trident.*rv\:11\./) ) {
+                htmlTag.className += ' ie11';
+            }
+
+	        if ( navigator.userAgent.indexOf("Edge") > -1 ) {
+                htmlTag.className += ' ieEdge';
+            }
+
+            if ( /(iPad|iPhone|iPod)/g.test(navigator.userAgent) ) {
+                htmlTag.className += ' td-md-is-ios';
+            }
+
+            var user_agent = navigator.userAgent.toLowerCase();
+            if ( user_agent.indexOf("android") > -1 ) {
+                htmlTag.className += ' td-md-is-android';
+            }
+
+            if ( -1 !== navigator.userAgent.indexOf('Mac OS X')  ) {
+                htmlTag.className += ' td-md-is-os-x';
+            }
+
+            if ( /chrom(e|ium)/.test(navigator.userAgent.toLowerCase()) ) {
+               htmlTag.className += ' td-md-is-chrome';
+            }
+
+            if ( -1 !== navigator.userAgent.indexOf('Firefox') ) {
+                htmlTag.className += ' td-md-is-firefox';
+            }
+
+            if ( -1 !== navigator.userAgent.indexOf('Safari') && -1 === navigator.userAgent.indexOf('Chrome') ) {
+                htmlTag.className += ' td-md-is-safari';
+            }
+
+            if( -1 !== navigator.userAgent.indexOf('IEMobile') ){
+                htmlTag.className += ' td-md-is-iemobile';
+            }
+
+        })();
+
+
+
+
+        var tdLocalCache = {};
+
+        ( function () {
+            "use strict";
+
+            tdLocalCache = {
+                data: {},
+                remove: function (resource_id) {
+                    delete tdLocalCache.data[resource_id];
+                },
+                exist: function (resource_id) {
+                    return tdLocalCache.data.hasOwnProperty(resource_id) && tdLocalCache.data[resource_id] !== null;
+                },
+                get: function (resource_id) {
+                    return tdLocalCache.data[resource_id];
+                },
+                set: function (resource_id, cachedData) {
+                    tdLocalCache.remove(resource_id);
+                    tdLocalCache.data[resource_id] = cachedData;
+                }
+            };
+        })();
+
+    
+    
+var tds_login_sing_in_widget="show";
+var td_viewport_interval_list=[{"limitBottom":767,"sidebarWidth":228},{"limitBottom":1018,"sidebarWidth":300},{"limitBottom":1140,"sidebarWidth":324}];
+var td_animation_stack_effect="type0";
+var tds_animation_stack=true;
+var td_animation_stack_specific_selectors=".entry-thumb, img";
+var td_animation_stack_general_selectors=".td-animation-stack img, .td-animation-stack .entry-thumb, .post img";
+var td_ajax_url="https:\/\/laraveldaily.com\/wp-admin\/admin-ajax.php?td_theme_name=Newspaper&v=9.2";
+var td_get_template_directory_uri="https:\/\/laraveldaily.com\/wp-content\/themes\/Newspaper";
+var tds_snap_menu="smart_snap_always";
+var tds_logo_on_sticky="show_header_logo";
+var tds_header_style="";
+var td_please_wait="Please wait...";
+var td_email_user_pass_incorrect="User or password incorrect!";
+var td_email_user_incorrect="Email or username incorrect!";
+var td_email_incorrect="Email incorrect!";
+var tds_more_articles_on_post_enable="";
+var tds_more_articles_on_post_time_to_wait="";
+var tds_more_articles_on_post_pages_distance_from_top=0;
+var tds_theme_color_site_wide="#4db2ec";
+var tds_smart_sidebar="enabled";
+var tdThemeName="Newspaper";
+var td_magnific_popup_translation_tPrev="Previous (Left arrow key)";
+var td_magnific_popup_translation_tNext="Next (Right arrow key)";
+var td_magnific_popup_translation_tCounter="%curr% of %total%";
+var td_magnific_popup_translation_ajax_tError="The content from %url% could not be loaded.";
+var td_magnific_popup_translation_image_tError="The image #%curr% could not be loaded.";
+var tdDateNamesI18n={"month_names":["January","February","March","April","May","June","July","August","September","October","November","December"],"month_names_short":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"day_names":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"day_names_short":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]};
+var td_ad_background_click_link="";
+var td_ad_background_click_target="";
+</script>
+
+
+<!-- Header style compiled by theme -->
+
+<style>
+    
+.block-title > span,
+    .block-title > span > a,
+    .block-title > a,
+    .block-title > label,
+    .widgettitle,
+    .widgettitle:after,
+    .td-trending-now-title,
+    .td-trending-now-wrapper:hover .td-trending-now-title,
+    .wpb_tabs li.ui-tabs-active a,
+    .wpb_tabs li:hover a,
+    .vc_tta-container .vc_tta-color-grey.vc_tta-tabs-position-top.vc_tta-style-classic .vc_tta-tabs-container .vc_tta-tab.vc_active > a,
+    .vc_tta-container .vc_tta-color-grey.vc_tta-tabs-position-top.vc_tta-style-classic .vc_tta-tabs-container .vc_tta-tab:hover > a,
+    .td_block_template_1 .td-related-title .td-cur-simple-item,
+    .woocommerce .product .products h2:not(.woocommerce-loop-product__title),
+    .td-subcat-filter .td-subcat-dropdown:hover .td-subcat-more,
+    .td-weather-information:before,
+    .td-weather-week:before,
+    .td_block_exchange .td-exchange-header:before,
+    .td-theme-wrap .td_block_template_3 .td-block-title > *,
+    .td-theme-wrap .td_block_template_4 .td-block-title > *,
+    .td-theme-wrap .td_block_template_7 .td-block-title > *,
+    .td-theme-wrap .td_block_template_9 .td-block-title:after,
+    .td-theme-wrap .td_block_template_10 .td-block-title::before,
+    .td-theme-wrap .td_block_template_11 .td-block-title::before,
+    .td-theme-wrap .td_block_template_11 .td-block-title::after,
+    .td-theme-wrap .td_block_template_14 .td-block-title,
+    .td-theme-wrap .td_block_template_15 .td-block-title:before,
+    .td-theme-wrap .td_block_template_17 .td-block-title:before {
+        background-color: #222222;
+    }
+
+    .woocommerce div.product .woocommerce-tabs ul.tabs li.active {
+    	background-color: #222222 !important;
+    }
+
+    .block-title,
+    .td_block_template_1 .td-related-title,
+    .wpb_tabs .wpb_tabs_nav,
+    .vc_tta-container .vc_tta-color-grey.vc_tta-tabs-position-top.vc_tta-style-classic .vc_tta-tabs-container,
+    .woocommerce div.product .woocommerce-tabs ul.tabs:before,
+    .td-theme-wrap .td_block_template_5 .td-block-title > *,
+    .td-theme-wrap .td_block_template_17 .td-block-title,
+    .td-theme-wrap .td_block_template_17 .td-block-title::before {
+        border-color: #222222;
+    }
+
+    .td-theme-wrap .td_block_template_4 .td-block-title > *:before,
+    .td-theme-wrap .td_block_template_17 .td-block-title::after {
+        border-color: #222222 transparent transparent transparent;
+    }
+    
+    .td-theme-wrap .td_block_template_4 .td-related-title .td-cur-simple-item:before {
+        border-color: #222222 transparent transparent transparent !important;
+    }
+
+    
+    .td-footer-wrapper,
+    .td-footer-wrapper .td_block_template_7 .td-block-title > *,
+    .td-footer-wrapper .td_block_template_17 .td-block-title,
+    .td-footer-wrapper .td-block-title-wrap .td-wrapper-pulldown-filter {
+        background-color: #111111;
+    }
+
+    
+    .td-footer-wrapper::before {
+        background-size: cover;
+    }
+
+    
+    .td-footer-wrapper::before {
+        background-position: center center;
+    }
+
+    
+    .td-footer-wrapper::before {
+        opacity: 0.1;
+    }
+
+
+
+    
+    .td-post-content p,
+    .td-post-content {
+        font-size:18px;
+	
+    }
+    
+    .post blockquote p,
+    .page blockquote p,
+    .td-post-text-content blockquote p {
+        font-family:Verdana, Geneva, sans-serif;
+	font-size:18px;
+	font-style:normal;
+	text-transform:none;
+	
+    }
+    
+    .post .td_quote_box p,
+    .page .td_quote_box p {
+        font-size:20px;
+	
+    }
+    
+    .post .td_pull_quote p,
+    .page .td_pull_quote p {
+        font-size:20px;
+	
+    }
+    
+    .td-post-content li {
+        font-family:Verdana, Geneva, sans-serif;
+	font-size:18px;
+	
+    }
+    
+    .td-post-content h1 {
+        font-size:40px;
+	
+    }
+    
+    .td-post-content h2 {
+        font-size:34px;
+	
+    }
+    
+    .td-post-content h3 {
+        font-size:28px;
+	
+    }
+</style>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-64361490-1');
+</script>
+<style type="text/css">
+@font-face {
+  font-weight: 400;
+  font-style:  normal;
+  font-family: 'Circular-Loom';
+
+  src: url('https://cdn.loom.com/assets/fonts/circular/CircularXXWeb-Book-cd7d2bcec649b1243839a15d5eb8f0a3.woff2') format('woff2');
+}
+
+@font-face {
+  font-weight: 500;
+  font-style:  normal;
+  font-family: 'Circular-Loom';
+
+  src: url('https://cdn.loom.com/assets/fonts/circular/CircularXXWeb-Medium-d74eac43c78bd5852478998ce63dceb3.woff2') format('woff2');
+}
+
+@font-face {
+  font-weight: 700;
+  font-style:  normal;
+  font-family: 'Circular-Loom';
+
+  src: url('https://cdn.loom.com/assets/fonts/circular/CircularXXWeb-Bold-83b8ceaf77f49c7cffa44107561909e4.woff2') format('woff2');
+}
+
+@font-face {
+  font-weight: 900;
+  font-style:  normal;
+  font-family: 'Circular-Loom';
+
+  src: url('https://cdn.loom.com/assets/fonts/circular/CircularXXWeb-Black-bf067ecb8aa777ceb6df7d72226febca.woff2') format('woff2');
+}</style><link rel="stylesheet" type="text/css" href="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/modal-slidein.css" media="all"><style type="text/css" id=""></style></head>
+
+<body class="post-template-default single single-post postid-1888 single-format-standard differences-request-get-vs-request-input-vs-helper-vs-get_data global-block-template-1 td-full-layout td-js-loaded" itemscope="itemscope" itemtype="https://schema.org/WebPage" style="overflow: auto;">
+
+        <div class="td-scroll-up"><i class="td-icon-menu-up"></i></div>
+    
+    <div class="td-menu-background"></div>
+<div id="td-mobile-nav" style="min-height: 569px;">
+    <div class="td-mobile-container">
+        <!-- mobile menu top section -->
+        <div class="td-menu-socials-wrap">
+            <!-- socials -->
+            <div class="td-menu-socials">
+                
+        <span class="td-social-icon-wrap">
+            <a target="_blank" href="https://www.facebook.com/laraveldaily/" title="Facebook">
+                <i class="td-icon-font td-icon-facebook"></i>
+            </a>
+        </span>
+        <span class="td-social-icon-wrap">
+            <a target="_blank" href="https://twitter.com/dailylaravel" title="Twitter">
+                <i class="td-icon-font td-icon-twitter"></i>
+            </a>
+        </span>
+        <span class="td-social-icon-wrap">
+            <a target="_blank" href="https://www.youtube.com/channel/UCTuplgOBi6tJIlesIboymGA" title="Youtube">
+                <i class="td-icon-font td-icon-youtube"></i>
+            </a>
+        </span>            </div>
+            <!-- close button -->
+            <div class="td-mobile-close">
+                <a href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#"><i class="td-icon-close-mobile"></i></a>
+            </div>
+        </div>
+
+        <!-- login section -->
+                    <div class="td-menu-login-section">
+                
+    <div class="td-guest-wrap">
+        <div class="td-menu-avatar"><div class="td-avatar-container"><img alt="" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/none.png" srcset="https://secure.gravatar.com/avatar/?s=160&amp;d=mm&amp;r=g 2x" class="avatar avatar-80 photo avatar-default" height="80" width="80"></div></div>
+        <div class="td-menu-login"><a id="login-link-mob">Sign in</a></div>
+    </div>
+            </div>
+        
+        <!-- menu section -->
+        <div class="td-mobile-content">
+            <div class="menu-main-menu-container"><ul id="menu-main-menu" class="td-mobile-main-menu"><li id="menu-item-2384" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-first menu-item-2384"><a href="https://laraveldaily.teachable.com/">Laravel Courses</a></li>
+<li id="menu-item-3601" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3601"><a href="https://laraveldaily.com/weekly-laravel-newsletter/">Weekly Laravel newsletter</a></li>
+<li id="menu-item-2385" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2385"><a href="https://laraveldaily.com/about-project/">About Author</a></li>
+</ul></div>        </div>
+    </div>
+
+    <!-- register/login section -->
+            <div id="login-form-mobile" class="td-register-section">
+            
+            <div id="td-login-mob" class="td-login-animation td-login-hide-mob">
+            	<!-- close button -->
+	            <div class="td-login-close">
+	                <a href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#" class="td-back-button"><i class="td-icon-read-down"></i></a>
+	                <div class="td-login-title">Sign in</div>
+	                <!-- close button -->
+		            <div class="td-mobile-close">
+		                <a href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#"><i class="td-icon-close-mobile"></i></a>
+		            </div>
+	            </div>
+	            <div class="td-login-form-wrap">
+	                <div class="td-login-panel-title"><span>Welcome!</span>Log into your account</div>
+	                <div class="td_display_err"></div>
+	                <div class="td-login-inputs"><input class="td-login-input" type="text" name="login_email" id="login_email-mob" value="" required=""><label>your username</label></div>
+	                <div class="td-login-inputs"><input class="td-login-input" type="password" name="login_pass" id="login_pass-mob" value="" required=""><label>your password</label></div>
+	                <input type="button" name="login_button" id="login_button-mob" class="td-login-button" value="LOG IN">
+	                <div class="td-login-info-text">
+	                <a href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#" id="forgot-pass-link-mob">Forgot your password?</a>
+	                </div>
+	                
+	                
+	                
+                </div>
+            </div>
+
+            
+            
+            
+            
+            <div id="td-forgot-pass-mob" class="td-login-animation td-login-hide-mob">
+                <!-- close button -->
+	            <div class="td-forgot-pass-close">
+	                <a href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#" class="td-back-button"><i class="td-icon-read-down"></i></a>
+	                <div class="td-login-title">Password recovery</div>
+	            </div>
+	            <div class="td-login-form-wrap">
+	                <div class="td-login-panel-title">Recover your password</div>
+	                <div class="td_display_err"></div>
+	                <div class="td-login-inputs"><input class="td-login-input" type="text" name="forgot_email" id="forgot_email-mob" value="" required=""><label>your email</label></div>
+	                <input type="button" name="forgot_button" id="forgot_button-mob" class="td-login-button" value="Send My Pass">
+                </div>
+            </div>
+        </div>
+    </div>    <div class="td-search-background"></div>
+<div class="td-search-wrap-mob">
+	<div class="td-drop-down-search" aria-labelledby="td-header-search-button">
+		<form method="get" class="td-search-form" action="https://laraveldaily.com/">
+			<!-- close button -->
+			<div class="td-search-close">
+				<a href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#"><i class="td-icon-close-mobile"></i></a>
+			</div>
+			<div role="search" class="td-search-input">
+				<span>Search</span>
+				<input id="td-header-search-mob" type="text" value="" name="s" autocomplete="off">
+			</div>
+		</form>
+		<div id="td-aj-search-mob"></div>
+	</div>
+</div>    
+    
+    <div id="td-outer-wrap" class="td-theme-wrap">
+    
+        <!--
+Header style 1
+-->
+
+
+<div class="td-header-wrap td-header-style-1 ">
+    
+    <div class="td-header-top-menu-full td-container-wrap ">
+        <div class="td-container td-header-row td-header-top-menu">
+            <!-- LOGIN MODAL -->
+
+                <div id="login-form" class="white-popup-block mfp-hide mfp-with-anim">
+                    <div class="td-login-wrap">
+                        <a href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#" class="td-back-button"><i class="td-icon-modal-back"></i></a>
+                        <div id="td-login-div" class="td-login-form-div td-display-block">
+                            <div class="td-login-panel-title">Sign in</div>
+                            <div class="td-login-panel-descr">Welcome! Log into your account</div>
+                            <div class="td_display_err"></div>
+                            <div class="td-login-inputs"><input class="td-login-input" type="text" name="login_email" id="login_email" value="" required=""><label>your username</label></div>
+	                        <div class="td-login-inputs"><input class="td-login-input" type="password" name="login_pass" id="login_pass" value="" required=""><label>your password</label></div>
+                            <input type="button" name="login_button" id="login_button" class="wpb_button btn td-login-button" value="Login">
+                            <div class="td-login-info-text"><a href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#" id="forgot-pass-link">Forgot your password? Get help</a></div>
+                            
+                            
+                            
+                            
+                        </div>
+
+                        
+
+                         <div id="td-forgot-pass-div" class="td-login-form-div td-display-none">
+                            <div class="td-login-panel-title">Password recovery</div>
+                            <div class="td-login-panel-descr">Recover your password</div>
+                            <div class="td_display_err"></div>
+                            <div class="td-login-inputs"><input class="td-login-input" type="text" name="forgot_email" id="forgot_email" value="" required=""><label>your email</label></div>
+                            <input type="button" name="forgot_button" id="forgot_button" class="wpb_button btn td-login-button" value="Send My Password">
+                            <div class="td-login-info-text">A password will be e-mailed to you.</div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+                        </div>
+    </div>
+
+    <div class="td-banner-wrap-full td-logo-wrap-full td-container-wrap ">
+        <div class="td-container td-header-row td-header-header">
+            <div class="td-header-sp-logo">
+                            <a class="td-main-logo" href="https://laraveldaily.com/">
+                <img src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/laravel-daily-2.png" alt="">
+                <span class="td-visual-hidden">Laravel Daily</span>
+            </a>
+                    </div>
+                            <div class="td-header-sp-recs">
+                    <div class="td-header-rec-wrap">
+    <div class="td-a-rec td-a-rec-id-header  td_uid_1_62787aaa7796a_rand td_block_template_1"><div class="td-all-devices"><a href="https://laraveldaily.com/weekly-laravel-newsletter?utm_source=internal&amp;utm_campaign=top_banner"><img src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/laravel-articles.png"></a></div></div>
+</div>                </div>
+                    </div>
+    </div>
+
+    <div class="td-header-menu-wrap-full td-container-wrap " style="height: 48px;">
+        
+        <div class="td-header-menu-wrap td-header-gradient" style="transform: translate3d(0px, 0px, 0px);">
+            <div class="td-container td-header-row td-header-main-menu">
+                <div id="td-header-menu" role="navigation">
+    <div id="td-top-mobile-toggle"><a href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#"><i class="td-icon-font td-icon-mobile"></i></a></div>
+    <div class="td-main-menu-logo td-logo-in-header td-logo-sticky">
+        		<a class="td-mobile-logo td-sticky-header" href="https://laraveldaily.com/">
+			<img src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/laravel-daily-2.png" alt="">
+		</a>
+			<a class="td-header-logo td-sticky-header" href="https://laraveldaily.com/">
+			<img src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/laravel-daily-2.png" alt="">
+		</a>
+	    </div>
+    <div class="menu-main-menu-container"><ul id="menu-main-menu-1" class="sf-menu sf-js-enabled"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-first td-menu-item td-normal-menu menu-item-2384"><a href="https://laraveldaily.teachable.com/">Laravel Courses</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page td-menu-item td-normal-menu menu-item-3601"><a href="https://laraveldaily.com/weekly-laravel-newsletter/">Weekly Laravel newsletter</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page td-menu-item td-normal-menu menu-item-2385"><a href="https://laraveldaily.com/about-project/">About Author</a></li>
+</ul></div></div>
+
+
+    <div class="header-search-wrap">
+        <div class="td-search-btns-wrap">
+            <a id="td-header-search-button" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#" role="button" class="dropdown-toggle " data-toggle="dropdown"><i class="td-icon-search"></i></a>
+            <a id="td-header-search-button-mob" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#" role="button" class="dropdown-toggle " data-toggle="dropdown"><i class="td-icon-search"></i></a>
+        </div>
+
+        <div class="td-drop-down-search" aria-labelledby="td-header-search-button">
+            <form method="get" class="td-search-form" action="https://laraveldaily.com/">
+                <div role="search" class="td-head-form-search-wrap">
+                    <input id="td-header-search" type="text" value="" name="s" autocomplete="off"><input class="wpb_button wpb_btn-inverse btn" type="submit" id="td-header-search-top" value="Search">
+                </div>
+            </form>
+            <div id="td-aj-search"></div>
+        </div>
+    </div>
+            </div>
+        </div>
+    </div>
+
+</div><div class="td-main-content-wrap td-container-wrap">
+
+    <div class="td-container td-post-template-default ">
+        <div class="td-crumb-container"></div>
+
+        <div class="td-pb-row">
+                                    <div class="td-pb-span8 td-main-content" role="main">
+                            <div class="td-ss-main-content"><div class="clearfix"></div>
+                                
+    <article id="post-1888" class="post-1888 post type-post status-publish format-standard hentry category-quick-tips tag-validation" itemscope="" itemtype="https://schema.org/Article">
+        <div class="td-post-header">
+
+            
+            <header class="td-post-title">
+                <h1 class="entry-title">Differences: $request-&gt;get() vs $request-&gt;input() vs request() vs get_data()</h1>
+
+                
+
+                <div class="td-module-meta-info">
+                                        <span class="td-post-date td-post-date-no-dot"><time class="entry-date updated td-module-date" datetime="2017-11-29T17:32:31+00:00">November 29, 2017</time></span>                                                        </div>
+
+            </header>
+
+        </div>
+
+        
+
+        <div class="td-post-content">
+
+        
+        <p>How do you handle POST data in your <b>store()</b> or <b>update()</b> methods? Seems like a simple question, but actually there are so many options!</p>
+<p>See this code:</p>
+<pre>public function store(Request $request) {
+  $email = $request-&gt;input('email'); // option 1
+  $email = $request-&gt;get('email'); // option 2
+  $email = $request-&gt;email; // even more simple?
+  $email = request('email'); // there's also helper
+  $email = data_get($request, 'email'); // did you even know this function?
+}
+</pre>
+<p>Any thoughts? Do you know the difference?</p>
+<p>Ok, let’s ignore <b>data_get()</b> for now, cause it’s primary purpose is not about requests – it just <a href="https://laravel.com/docs/5.5/helpers#method-data-get" rel="noopener" target="_blank">retrieves a value from a nested array or object</a>.</p>
+<p>Next. In general, for most cases, all of those methods do <b>the same thing</b>. Difference are in subtle cases, let’s look through them.</p>
+<h3>$request-&gt;get() vs $request-&gt;input()</h3>
+<p>In this case, <b>input()</b> is a little more powerful, cause it takes the nested data. </p>
+<pre>$name = $request-&gt;input('products.0.name'); // this will work
+$name = $request-&gt;get('products.0.name'); // this will NOT work
+$name = $request-&gt;get('products')[0]['name']; // this will work instead
+</pre>
+<p>Remember <b>data_get()</b> we mentioned before? Actually, <b>$request-&gt;input()</b> <a href="http://laraveltnt.com/laravel-request-get-vs-request-input/" target="_blank">combines <b>$request-&gt;get()</b> with <b>data_get()</b> helper</a>. </p>
+<p>Official Laravel documentation uses <b>-&gt;input()</b> method and doesn’t even mention <b>-&gt;get()</b>.</p>
+<h3>Direct property</h3>
+<p>What about <b>$request-&gt;email</b>, is that wrong?<br>
+Again, let’s refer to <a href="https://laravel.com/docs/5.5/requests#retrieving-input" rel="noopener" target="_blank">official docs</a>:</p>
+<ul>
+<li><b>input()</b> method will work regardless of the HTTP verb</li>
+<li><b>input()</b> method retrieves values from entire request payload (including the query string)
+</li></ul>
+<p>Now, what does it say about <b>$request-&gt;name</b>?</p>
+<blockquote><p>You may also access user input using dynamic properties on the <b>Illuminate\Http\Request</b> instance. When using dynamic properties, Laravel will first look for the parameter’s value in the request payload. If it is not present, Laravel will search for the field in the route parameters.</p></blockquote>
+<h3>request() helper</h3>
+<p>This is just one helper out of dozens available – <a href="https://laravel.com/docs/5.5/helpers#method-request" rel="noopener" target="_blank">see documentation</a>:</p>
+<p>The request function returns the current <b>request</b> instance or obtains an <b>input item</b>:</p>
+<pre>$request = request();
+$value = request('key', $default = null);
+</pre>
+<p>So basically, it’s just a shortcut for <b>$request-&gt;input()</b>.</p>
+<p>And yes, don’t forget that you can provide default value, in case that input item is missing.<br>
+You can also do it with <b>$request-&gt;input()</b>.</p>
+<p>So, a little more clear? But anyway, in 99% of the cases it’s a matter of preference, which method to use.</p>
+<div class="widget_text td_block_template_1 awac-wrapper"><div class="widget_text td_block_template_1 awac widget custom_html-2"><div class="textwidget custom-html-widget"><div style="margin-top: 15px; border: 1px solid #CCC; padding: 10px; background-color: #F7F7F7; font-size: 24px; text-align:center">
+	Like our articles?<br>Check out our <a href="https://laraveldaily.teachable.com/?utm_source=laraveldaily&amp;utm_campaign=post_footer" target="_blank">Laravel online courses!</a>
+</div></div></div></div>        </div>
+
+
+        <footer>
+                        
+            <div class="td-post-source-tags">
+                                            </div>
+
+            <div class="td-post-sharing-bottom"><div id="td_social_sharing_article_bottom" class="td-post-sharing td-ps-bg td-ps-notext td-post-sharing-style1 "><div class="td-post-sharing-visible"><div class="td-social-sharing-button td-social-sharing-button-js td-social-handler td-social-share-text" style="transition: opacity 0.2s ease 0s; opacity: 1;">
+                                        <div class="td-social-but-icon"><i class="td-icon-share"></i></div>
+                                        <div class="td-social-but-text">Share</div>
+                                    </div><a class="td-social-sharing-button td-social-sharing-button-js td-social-network td-social-facebook" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Flaraveldaily.com%2Fdifferences-request-get-vs-request-input-vs-helper-vs-get_data%2F" style="transition: opacity 0.2s ease 0s; opacity: 1;">
+                                        <div class="td-social-but-icon"><i class="td-icon-facebook"></i></div>
+                                        <div class="td-social-but-text">Facebook</div>
+                                    </a><a class="td-social-sharing-button td-social-sharing-button-js td-social-network td-social-twitter" href="https://twitter.com/intent/tweet?text=Differences%3A+%24request-%3Eget%28%29+vs+%24request-%3Einput%28%29+vs+request%28%29+vs+get_data%28%29&amp;url=https%3A%2F%2Flaraveldaily.com%2Fdifferences-request-get-vs-request-input-vs-helper-vs-get_data%2F&amp;via=DailyLaravel" style="transition: opacity 0.2s ease 0s; opacity: 1;">
+                                        <div class="td-social-but-icon"><i class="td-icon-twitter"></i></div>
+                                        <div class="td-social-but-text">Twitter</div>
+                                    </a><a class="td-social-sharing-button td-social-sharing-button-js td-social-network td-social-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/&amp;title=Differences:%20$request-%3Eget()%20vs%20$request-%3Einput()%20vs%20request()%20vs%20get_data()" style="transition: opacity 0.2s ease 0s; opacity: 1;">
+                                        <div class="td-social-but-icon"><i class="td-icon-linkedin"></i></div>
+                                        <div class="td-social-but-text">Linkedin</div>
+                                    </a></div><div class="td-social-sharing-hidden" style="display: none;"><ul class="td-pulldown-filter-list"></ul><a class="td-social-sharing-button td-social-handler td-social-expand-tabs" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#" data-block-uid="td_social_sharing_article_bottom">
+                                    <div class="td-social-but-icon"><i class="td-icon-plus td-social-expand-tabs-icon"></i></div>
+                                </a></div></div></div>                        <div class="author-box-wrap"><a href="https://laraveldaily.com/author/povilas/"><img alt="" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/1653e999074ac526727ad5f84c1e563b.jpeg" srcset="https://secure.gravatar.com/avatar/1653e999074ac526727ad5f84c1e563b?s=192&amp;d=mm&amp;r=g 2x" class="avatar avatar-96 photo td-animation-stack-type0-1" height="96" width="96"></a><div class="desc"><div class="td-author-name vcard author"><span class="fn"><a href="https://laraveldaily.com/author/povilas/">Povilas Korop</a></span></div><div class="td-author-description">PHP web-developer with 15 years experience, 5 years with Laravel. 
+Now leading a small team of developers, growing Laravel adminpanel generator <a href="https://quickadminpanel.com/?utm_source=laraveldaily&amp;utm_campaign=author_banner">QuickAdminPanel</a> and publishing Laravel courses on <a href="https://laraveldaily.teachable.com/?utm_source=laraveldaily&amp;utm_campaign=author_banner">Teachable</a>.</div><div class="td-author-social">
+        <span class="td-social-icon-wrap">
+            <a target="_blank" href="https://www.linkedin.com/in/povilas-korop-4735aa54/" title="Linkedin">
+                <i class="td-icon-font td-icon-linkedin"></i>
+            </a>
+        </span>
+        <span class="td-social-icon-wrap">
+            <a target="_blank" href="https://twitter.com/povilaskorop" title="Twitter">
+                <i class="td-icon-font td-icon-twitter"></i>
+            </a>
+        </span></div><div class="clearfix"></div></div></div>	        <span class="td-page-meta" itemprop="author" itemscope="" itemtype="https://schema.org/Person"><meta itemprop="name" content="Povilas Korop"></span><meta itemprop="datePublished" content="2017-11-29T17:32:31+00:00"><meta itemprop="dateModified" content="2018-12-20T07:21:28+00:00"><meta itemscope="" itemprop="mainEntityOfPage" itemtype="https://schema.org/WebPage" itemid="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/"><span class="td-page-meta" itemprop="publisher" itemscope="" itemtype="https://schema.org/Organization"><span class="td-page-meta" itemprop="logo" itemscope="" itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="https://laraveldaily.com/wp-content/uploads/2018/12/laravel-daily-2.png"></span><meta itemprop="name" content="Laravel Daily"></span><meta itemprop="headline " content="Differences: $request-&gt;get() vs $request-&gt;input() vs request() vs get_data()"><span class="td-page-meta" itemprop="image" itemscope="" itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="https://laraveldaily.com/wp-content/themes/Newspaper/images/no-thumb/td_meta_replacement.png"><meta itemprop="width" content="1068"><meta itemprop="height" content="580"></span>        </footer>
+
+    </article> <!-- /.post -->
+
+    <div class="td_block_wrap td_block_related_posts td_uid_3_62787aaa79609_rand td_with_ajax_pagination td-pb-border-top td_block_template_1" data-td-block-uid="td_uid_3_62787aaa79609"><script>var block_td_uid_3_62787aaa79609 = new tdBlock();
+block_td_uid_3_62787aaa79609.id = "td_uid_3_62787aaa79609";
+block_td_uid_3_62787aaa79609.atts = '{"limit":3,"ajax_pagination":"next_prev","live_filter":"cur_post_same_tags","td_ajax_filter_type":"td_custom_related","class":"td_uid_3_62787aaa79609_rand","td_column_number":3,"live_filter_cur_post_id":1888,"live_filter_cur_post_author":"1","block_template_id":"","header_color":"","ajax_pagination_infinite_stop":"","offset":"","td_ajax_preloading":"","td_filter_default_txt":"","td_ajax_filter_ids":"","el_class":"","color_preset":"","border_top":"","css":"","tdc_css":"","tdc_css_class":"td_uid_3_62787aaa79609_rand","tdc_css_class_style":"td_uid_3_62787aaa79609_rand_style"}';
+block_td_uid_3_62787aaa79609.td_column_number = "3";
+block_td_uid_3_62787aaa79609.block_type = "td_block_related_posts";
+block_td_uid_3_62787aaa79609.post_count = "3";
+block_td_uid_3_62787aaa79609.found_posts = "15";
+block_td_uid_3_62787aaa79609.header_color = "";
+block_td_uid_3_62787aaa79609.ajax_pagination_infinite_stop = "";
+block_td_uid_3_62787aaa79609.max_num_pages = "5";
+tdBlocksArray.push(block_td_uid_3_62787aaa79609);
+</script><h4 class="td-related-title td-block-title"><a id="td_uid_4_62787aaa7a45d" class="td-related-left td-cur-simple-item" data-td_filter_value="" data-td_block_id="td_uid_3_62787aaa79609" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#">RELATED ARTICLES</a><a id="td_uid_5_62787aaa7a461" class="td-related-right" data-td_filter_value="td_related_more_from_author" data-td_block_id="td_uid_3_62787aaa79609" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#">MORE FROM AUTHOR</a></h4><div id="td_uid_3_62787aaa79609" class="td_block_inner">
+
+	<div class="td-related-row">
+
+	<div class="td-related-span4">
+
+        <div class="td_module_related_posts td-animation-stack td_mod_related_posts">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="https://laraveldaily.com/40-additional-laravel-validation-rules/" rel="bookmark" class="td-image-wrap" title="40 Additional Laravel Validation Rules"><img class="entry-thumb td-animation-stack-type0-1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANoAAACWAQMAAACCSQSPAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAABpJREFUWMPtwQENAAAAwiD7p7bHBwwAAAAg7RD+AAGXD7BoAAAAAElFTkSuQmCC" alt="" title="40 Additional Laravel Validation Rules" data-type="image_tag" data-img-url="https://laraveldaily.com/wp-content/uploads/2019/06/Laravel-extra-validation-rules-218x150.png" width="218" height="150"></a></div>                            </div>
+            <div class="item-details">
+                <h3 class="entry-title td-module-title"><a href="https://laraveldaily.com/40-additional-laravel-validation-rules/" rel="bookmark" title="40 Additional Laravel Validation Rules">40 Additional Laravel Validation Rules</a></h3>            </div>
+        </div>
+        
+	</div> <!-- ./td-related-span4 -->
+
+	<div class="td-related-span4">
+
+        <div class="td_module_related_posts td-animation-stack td_mod_related_posts">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="https://laraveldaily.com/laravel-validation-specify-attribute-names-for-error-messages/" rel="bookmark" class="td-image-wrap" title="Laravel Validation: Specify Attribute Names for Error Messages"><img class="entry-thumb td-animation-stack-type0-1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANoAAACWAQMAAACCSQSPAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAABpJREFUWMPtwQENAAAAwiD7p7bHBwwAAAAg7RD+AAGXD7BoAAAAAElFTkSuQmCC" alt="" title="Laravel Validation: Specify Attribute Names for Error Messages" data-type="image_tag" data-img-url="https://laraveldaily.com/wp-content/uploads/2019/02/Laravel-Validation-Attributes-218x150.png" width="218" height="150"></a></div>                            </div>
+            <div class="item-details">
+                <h3 class="entry-title td-module-title"><a href="https://laraveldaily.com/laravel-validation-specify-attribute-names-for-error-messages/" rel="bookmark" title="Laravel Validation: Specify Attribute Names for Error Messages">Laravel Validation: Specify Attribute Names for Error Messages</a></h3>            </div>
+        </div>
+        
+	</div> <!-- ./td-related-span4 -->
+
+	<div class="td-related-span4">
+
+        <div class="td_module_related_posts td-animation-stack td_mod_related_posts">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="https://laraveldaily.com/laravel-api-errors-and-exceptions-how-to-return-responses/" rel="bookmark" class="td-image-wrap" title="Laravel API Errors and Exceptions: How to Return Responses"><img class="entry-thumb td-animation-stack-type0-1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANoAAACWAQMAAACCSQSPAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAABpJREFUWMPtwQENAAAAwiD7p7bHBwwAAAAg7RD+AAGXD7BoAAAAAElFTkSuQmCC" alt="" title="Laravel API Errors and Exceptions: How to Return Responses" data-type="image_tag" data-img-url="https://laraveldaily.com/wp-content/uploads/2019/02/laravel-api-errors-exceptions-218x150.png" width="218" height="150"></a></div>                            </div>
+            <div class="item-details">
+                <h3 class="entry-title td-module-title"><a href="https://laraveldaily.com/laravel-api-errors-and-exceptions-how-to-return-responses/" rel="bookmark" title="Laravel API Errors and Exceptions: How to Return Responses">Laravel API Errors and Exceptions: How to Return Responses</a></h3>            </div>
+        </div>
+        
+	</div> <!-- ./td-related-span4 --></div><!--./row-fluid--></div><div class="td-next-prev-wrap"><a href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#" class="td-ajax-prev-page ajax-page-disabled" id="prev-page-td_uid_3_62787aaa79609" data-td_block_id="td_uid_3_62787aaa79609"><i class="td-icon-font td-icon-menu-left"></i></a><a href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#" class="td-ajax-next-page" id="next-page-td_uid_3_62787aaa79609" data-td_block_id="td_uid_3_62787aaa79609"><i class="td-icon-font td-icon-menu-right"></i></a></div></div> <!-- ./block -->
+	<div class="comments" id="comments">
+        
+            <div class="td-comments-title-wrap td_block_template_1">
+                <h4 class="td-comments-title block-title"><span>6 COMMENTS</span></h4>
+            </div>
+
+		        <ol class="comment-list ">
+                            <li class="comment " id="comment-83392">
+			<article>
+	            <footer>
+                    <img alt="" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/cd701cb200af4a7f758be35a172b2031.png" srcset="https://secure.gravatar.com/avatar/cd701cb200af4a7f758be35a172b2031?s=100&amp;d=mm&amp;r=g 2x" class="avatar avatar-50 photo" height="50" width="50">                    <cite>Ray</cite>
+
+                    <a class="comment-link" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#comment-83392">
+                        <time pubdate="1531753435">July 16, 2018 at 3:03 pm</time>
+                    </a>
+
+                                        
+                </footer>
+
+                <div class="comment-content">
+                    <p>Great explanation. I’ve been so much confused about this lately.</p>
+<p>Thank you!</p>
+                </div>
+
+	            <div class="comment-meta" id="comment-83392">
+                    <a rel="nofollow" class="comment-reply-link" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#comment-83392" onclick="return addComment.moveForm( &quot;comment-83392&quot;, &quot;83392&quot;, &quot;respond&quot;, &quot;1888&quot; )" aria-label="Reply to Ray">Reply</a>                </div>
+            </article>
+    </li><!-- #comment-## -->
+        <li class="comment " id="comment-84913">
+			<article>
+	            <footer>
+                    <img alt="" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/8eb01ee343320928b839b1be9c777d69.png" srcset="https://secure.gravatar.com/avatar/8eb01ee343320928b839b1be9c777d69?s=100&amp;d=mm&amp;r=g 2x" class="avatar avatar-50 photo" height="50" width="50">                    <cite>Tom A</cite>
+
+                    <a class="comment-link" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#comment-84913">
+                        <time pubdate="1536342336">September 7, 2018 at 5:45 pm</time>
+                    </a>
+
+                                        
+                </footer>
+
+                <div class="comment-content">
+                    <p>This is a big problem with Laravel (and every other ‘friendly’ framework it seems). 10 ways to do any single thing, all of which need to be tested. Then you see code with input() and get() in it, etc. </p>
+<p>Pick something and stick with it. </p>
+<p>Laravel user for 3 years, multiple apps in production.</p>
+                </div>
+
+	            <div class="comment-meta" id="comment-84913">
+                    <a rel="nofollow" class="comment-reply-link" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#comment-84913" onclick="return addComment.moveForm( &quot;comment-84913&quot;, &quot;84913&quot;, &quot;respond&quot;, &quot;1888&quot; )" aria-label="Reply to Tom A">Reply</a>                </div>
+            </article>
+    </li><!-- #comment-## -->
+        <li class="comment " id="comment-92068">
+			<article>
+	            <footer>
+                    <img alt="" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/33cf27da22bc9f15ad00e620ddd84189.jpeg" srcset="https://secure.gravatar.com/avatar/33cf27da22bc9f15ad00e620ddd84189?s=100&amp;d=mm&amp;r=g 2x" class="avatar avatar-50 photo" height="50" width="50">                    <cite>Jose</cite>
+
+                    <a class="comment-link" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#comment-92068">
+                        <time pubdate="1551274958">February 27, 2019 at 3:42 pm</time>
+                    </a>
+
+                                        
+                </footer>
+
+                <div class="comment-content">
+                    <p>Clear, Tidy and short. Very good explanation. Thank you very much</p>
+                </div>
+
+	            <div class="comment-meta" id="comment-92068">
+                    <a rel="nofollow" class="comment-reply-link" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#comment-92068" onclick="return addComment.moveForm( &quot;comment-92068&quot;, &quot;92068&quot;, &quot;respond&quot;, &quot;1888&quot; )" aria-label="Reply to Jose">Reply</a>                </div>
+            </article>
+    </li><!-- #comment-## -->
+        <li class="comment " id="comment-159767">
+			<article>
+	            <footer>
+                    <img alt="" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/4092c7d076cdfa40ee6569852220a437.png" srcset="https://secure.gravatar.com/avatar/4092c7d076cdfa40ee6569852220a437?s=100&amp;d=mm&amp;r=g 2x" class="avatar avatar-50 photo" height="50" width="50">                    <cite><a href="https://www.phptreepoint.com/" rel="external nofollow" class="url">Sumit Gupta</a></cite>
+
+                    <a class="comment-link" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#comment-159767">
+                        <time pubdate="1590348275">May 24, 2020 at 10:24 pm</time>
+                    </a>
+
+                                        
+                </footer>
+
+                <div class="comment-content">
+                    <p>Great explanation. When I was new in Laravel, I was very confused but today I understand the difference between input() and get(). Thank you sir</p>
+                </div>
+
+	            <div class="comment-meta" id="comment-159767">
+                    <a rel="nofollow" class="comment-reply-link" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#comment-159767" onclick="return addComment.moveForm( &quot;comment-159767&quot;, &quot;159767&quot;, &quot;respond&quot;, &quot;1888&quot; )" aria-label="Reply to Sumit Gupta">Reply</a>                </div>
+            </article>
+    </li><!-- #comment-## -->
+        <li class="comment " id="comment-171034">
+			<article>
+	            <footer>
+                    <img alt="" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/c6cb6fc598b7064eee7a8e8104fb2dbb.jpeg" srcset="https://secure.gravatar.com/avatar/c6cb6fc598b7064eee7a8e8104fb2dbb?s=100&amp;d=mm&amp;r=g 2x" class="avatar avatar-50 photo" height="50" width="50">                    <cite>Captain Hypertext</cite>
+
+                    <a class="comment-link" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#comment-171034">
+                        <time pubdate="1593892091">July 4, 2020 at 10:48 pm</time>
+                    </a>
+
+                                        
+                </footer>
+
+                <div class="comment-content">
+                    <p>Thought I should point out, per the comment block for $request-&gt;get() in 5.8:<br>
+“This method belongs to Symfony HttpFoundation and is not usually needed when using Laravel.”</p>
+<p>It may not have been in there at the time of this article, but it’s some helpful context.  Thanks for the article!</p>
+                </div>
+
+	            <div class="comment-meta" id="comment-171034">
+                    <a rel="nofollow" class="comment-reply-link" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#comment-171034" onclick="return addComment.moveForm( &quot;comment-171034&quot;, &quot;171034&quot;, &quot;respond&quot;, &quot;1888&quot; )" aria-label="Reply to Captain Hypertext">Reply</a>                </div>
+            </article>
+    </li><!-- #comment-## -->
+        <li class="comment " id="comment-383362">
+			<article>
+	            <footer>
+                    <img alt="" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/2839f564fafbc5e96f194c8a4ad70441.png" srcset="https://secure.gravatar.com/avatar/2839f564fafbc5e96f194c8a4ad70441?s=100&amp;d=mm&amp;r=g 2x" class="avatar avatar-50 photo" height="50" width="50">                    <cite>francisco</cite>
+
+                    <a class="comment-link" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#comment-383362">
+                        <time pubdate="1639058640">December 9, 2021 at 4:04 pm</time>
+                    </a>
+
+                                        
+                </footer>
+
+                <div class="comment-content">
+                    <p>get() is from Symfony HttpFoundation Request, input() is a method of the Laravel Request class that is extending Symfony Request class.</p>
+                </div>
+
+	            <div class="comment-meta" id="comment-383362">
+                    <a rel="nofollow" class="comment-reply-link" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#comment-383362" onclick="return addComment.moveForm( &quot;comment-383362&quot;, &quot;383362&quot;, &quot;respond&quot;, &quot;1888&quot; )" aria-label="Reply to francisco">Reply</a>                </div>
+            </article>
+    </li><!-- #comment-## -->
+                </ol>
+                <div class="comment-pagination">
+                                                        </div>
+
+            	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">LEAVE A REPLY <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://laraveldaily.com/differences-request-get-vs-request-input-vs-helper-vs-get_data/#respond" style="display:none;">Cancel reply</a></small></h3>			<form action="https://laraveldaily.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate="">
+				<div class="clearfix"></div>
+				<div class="comment-form-input-wrap td-form-comment">
+					<textarea placeholder="Comment:" id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea>
+					<div class="td-warning-comment">Please enter your comment!</div>
+				</div>
+		        <div class="comment-form-input-wrap td-form-author">
+			            <input class="" id="author" name="author" placeholder="Name:*" type="text" value="" size="30" aria-required="true">
+			            <div class="td-warning-author">Please enter your name here</div>
+			         </div>
+<div class="comment-form-input-wrap td-form-email">
+			            <input class="" id="email" name="email" placeholder="Email:*" type="text" value="" size="30" aria-required="true">
+			            <div class="td-warning-email-error">You have entered an incorrect email address!</div>
+			            <div class="td-warning-email">Please enter your email address here</div>
+			         </div>
+<div class="comment-form-input-wrap td-form-url">
+			            <input class="" id="url" name="url" placeholder="Website:" type="text" value="" size="30">
+                     </div>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"><label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p>
+<div class="comment-sub-ops" data-auto="position">
+
+    <label for="comment-mail-sub-type" class="cso-sub-type">
+        <span class="cso-icon"><svg style="width:1em; height:1em; vertical-align:middle;" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<g fill="currentColor" fill-rule="evenodd">
+		<path d="M14.1,5.63571636 C14.9517714,6.33967604 15.450459,7.19287046 15.450459,8.11238878 C15.450459,9.00675525 14.9786798,9.83837654 14.1691007,10.5309611 L15.9373937,14.0087185 L12.3204301,12.0078104 C11.9296094,13.5858368 9.54844584,14.7997638 6.66936474,14.7997638 C5.53232152,14.7997638 4.47293941,14.6104254 3.58314938,14.2840966 L3.58314938,14.2840966 L0.600000024,15.934378 L1.91489821,13.3483263 C1.31289726,12.8333222 0.962083376,12.2149306 0.962083376,11.549882 C0.962083376,11.165606 1.07921023,10.7969075 1.29424428,10.4547307 L1.29424428,10.4547307 C0.538036753,9.77771086 0.100000001,8.97417858 0.100000001,8.11238878 C0.100000001,7.04123575 0.776722924,6.06008476 1.89999998,5.30000019 L1.89999998,7.0658888 C1.89999998,7.30870143 2.09163284,7.50553995 2.34867325,7.50553995 L13.6513267,7.50553995 C13.8991221,7.50553995 14.1,7.31362877 14.1,7.0658888 L14.1,5.63571636 L14.1,5.63571636 Z M1.91455086,10.9345943 C1.80464172,11.1556337 1.74596704,11.3882813 1.74596704,11.6284523 C1.74596704,12.1628789 2.03649339,12.660053 2.53556999,13.0749705 L1.89355472,14.5590821 L3.60073421,13.7061116 L3.60073421,13.7061116 C4.4110062,14.0513606 5.42865146,14.2569046 6.53374306,14.2569046 C8.94591699,14.2569046 10.9414496,13.2775827 11.2731076,12.0036603 C10.2241563,12.3100096 9.03514487,12.482874 7.77522952,12.482874 C5.42553187,12.482874 3.3224447,11.8816356 1.91455086,10.9345943 L1.91455086,10.9345943 Z M3.03674893,0 C2.79553911,0 2.5999999,0.198275445 2.5999999,0.450938832 L2.5999999,6.42178844 C2.5999999,6.67083508 2.80610042,6.87272727 3.03674893,6.87272727 L12.9632509,6.87272727 C13.2044607,6.87272727 13.3999999,6.67445183 13.3999999,6.42178844 L13.3999999,0.450938832 C13.3999999,0.201892192 13.1938994,0 12.9632509,0 L3.03674893,0 Z M7.99999989,4.5999999 L12.5,0.600000013 L11.5625,0.600000013 L7.99999989,2.78181813 L4.43749976,0.600000013 L3.5,0.599999905 L7.99999989,4.5999999 Z"></path>
+	</g>
+</svg></span> Receive Email Notifications?
+    </label>
+
+        <select id="comment-mail-sub-type" name="comment_mail_sub_type" class="cso-sub-type form-control" title="Receive Notifications?">
+        <option value="">no, do not subscribe</option>
+        <option value="comment" selected="selected">yes, replies to my comment</option>
+        <option value="comments">yes, all comments/replies</option>
+    </select>
+     <select id="comment-mail-sub-deliver" name="comment_mail_sub_deliver" class="cso-sub-deliver form-control" title="Notify Me">
+        <option value="asap" selected="selected">instantly</option>
+        <option value="hourly">hourly digest</option>
+        <option value="daily">daily digest</option>
+        <option value="weekly">weekly digest</option>
+    </select>
+
+
+    <div class="cso-links">
+        <span class="cso-link-new">Or, you can <a href="https://laraveldaily.com/?comment_mail%5Bmanage%5D%5Bsub_new%5D=0&amp;comment_mail%5Bmanage%5D%5Bsub_form%5D%5Bpost_id%5D=1888" rel="nofollow">subscribe without commenting</a>.</span>
+            </div>
+
+        
+
+</div>
+
+    <style type="text/css">
+        .comment-sub-ops
+        {
+            margin : 1em 0 1em 0;
+        }
+        .comment-sub-ops label
+        {
+            display : block;
+        }
+        .comment-sub-ops select
+        {
+            box-sizing : border-box;
+            display    : inline-block;
+        }
+        .comment-sub-ops select.cso-sub-type
+        {
+            width : 70%;
+            float : left;
+        }
+        .comment-sub-ops select.cso-sub-deliver
+        {
+            width : 28%;
+            float : right;
+        }
+        .comment-sub-ops select.cso-sub-deliver[disabled]
+        {
+            opacity : 0.3;
+        }
+        .comment-sub-ops .cso-links
+        {
+            font-size   : 80%;
+            line-height : 1.5em;
+            margin      : 0 0 0 .5em;
+            clear       : both;
+        }
+        .comment-sub-ops .cso-links .cso-link-summary
+        {
+            display     : block;
+            line-height : 1em;
+        }
+        .comment-sub-ops .cso-sub-list
+        {
+            margin: 1em 0 0 0;
+        }
+        .comment-sub-ops .cso-sub-list label
+        {
+            cursor: pointer;
+        }
+    </style><p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment"> <input type="hidden" name="comment_post_ID" value="1888" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="5eb31c5eb7"></p><p style="display: none;"></p>			<input type="hidden" id="ak_js" name="ak_js" value="1652062899184"></form>
+			</div><!-- #respond -->
+	    </div> <!-- /.content -->
+                            <div class="clearfix"></div></div>
+                        </div>
+                        <div class="td-pb-span4 td-main-sidebar" role="complementary">
+                            <div class="td-ss-main-sidebar" style="width: 324px; position: static; top: auto; bottom: auto; z-index: 1;"><div class="clearfix"></div>
+                                <div class="td-a-rec td-a-rec-id-custom_ad_1  td_uid_6_62787aaa7d048_rand td_block_template_1"><div class="td-all-devices">
+<a href="https://laraveldaily.teachable.com/?utm_source=laraveldaily&amp;utm_campaign=sidebar_banner" target="_blank"><img src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/online-courses.png"></a></div></div><div class="td-a-rec td-a-rec-id-custom_ad_2  td_uid_7_62787aaa7d1ce_rand td_block_template_1"><div class="td-all-devices"><a href="https://quickadminpanel.com/?utm_source=laraveldaily&amp;utm_campaign=sidebar_banner" target="_blank"><img src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/quick-admin-panel-1.png"></a></div></div><div class="td_block_wrap td_block_15 td_block_widget td_uid_8_62787aaa7d388_rand td-pb-border-top td_block_template_1 td-column-1 td_block_padding" data-td-block-uid="td_uid_8_62787aaa7d388">
+<style>
+.td-theme-wrap .td_uid_8_62787aaa7d388_rand .td-pulldown-filter-link:hover,
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .td-subcat-item a:hover,
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .td-subcat-item .td-cur-simple-item {
+                color: #dd9933;
+            }
+
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .block-title > *,
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .td-subcat-dropdown:hover .td-subcat-more {
+                background-color: #dd9933;
+            }
+            .td-theme-wrap .td-footer-wrapper .td_uid_8_62787aaa7d388_rand .block-title > * {
+                padding: 6px 7px 5px;
+                line-height: 1;
+            }
+
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .block-title {
+                border-color: #dd9933;
+            }
+
+            
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .td_module_wrap:hover .entry-title a,
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .td_quote_on_blocks,
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .td-opacity-cat .td-post-category:hover,
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .td-opacity-read .td-read-more a:hover,
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .td-opacity-author .td-post-author-name a:hover,
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .td-instagram-user a {
+                color: #dd9933;
+            }
+
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .td-next-prev-wrap a:hover,
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .td-load-more-wrap a:hover {
+                background-color: #dd9933;
+                border-color: #dd9933;
+            }
+
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .td-read-more a,
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .td-weather-information:before,
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .td-weather-week:before,
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .td-exchange-header:before,
+            .td-theme-wrap .td-footer-wrapper .td_uid_8_62787aaa7d388_rand .td-post-category,
+            .td-theme-wrap .td_uid_8_62787aaa7d388_rand .td-post-category:hover {
+                background-color: #dd9933;
+            }
+</style><script>var block_td_uid_8_62787aaa7d388 = new tdBlock();
+block_td_uid_8_62787aaa7d388.id = "td_uid_8_62787aaa7d388";
+block_td_uid_8_62787aaa7d388.atts = '{"custom_title":"NEWEST VIDEOS","custom_url":"","block_template_id":"","header_color":"#dd9933","header_text_color":"#","accent_text_color":"#","mx4_tl":"","limit":"4","offset":"","el_class":"","post_ids":"","category_id":"","category_ids":"","tag_slug":"video","autors_id":"","installed_post_types":"","sort":"","td_ajax_filter_type":"","td_ajax_filter_ids":"","td_filter_default_txt":"All","td_ajax_preloading":"","ajax_pagination":"","ajax_pagination_infinite_stop":"","class":"td_block_widget td_uid_8_62787aaa7d388_rand","separator":"","f_header_font_header":"","f_header_font_title":"Block header","f_header_font_settings":"","f_header_font_family":"","f_header_font_size":"","f_header_font_line_height":"","f_header_font_style":"","f_header_font_weight":"","f_header_font_transform":"","f_header_font_spacing":"","f_header_":"","f_ajax_font_title":"Ajax categories","f_ajax_font_settings":"","f_ajax_font_family":"","f_ajax_font_size":"","f_ajax_font_line_height":"","f_ajax_font_style":"","f_ajax_font_weight":"","f_ajax_font_transform":"","f_ajax_font_spacing":"","f_ajax_":"","f_more_font_title":"Load more button","f_more_font_settings":"","f_more_font_family":"","f_more_font_size":"","f_more_font_line_height":"","f_more_font_style":"","f_more_font_weight":"","f_more_font_transform":"","f_more_font_spacing":"","f_more_":"","mx4f_title_font_header":"","mx4f_title_font_title":"Article title","mx4f_title_font_settings":"","mx4f_title_font_family":"","mx4f_title_font_size":"","mx4f_title_font_line_height":"","mx4f_title_font_style":"","mx4f_title_font_weight":"","mx4f_title_font_transform":"","mx4f_title_font_spacing":"","mx4f_title_":"","mx4f_cat_font_title":"Article category tag","mx4f_cat_font_settings":"","mx4f_cat_font_family":"","mx4f_cat_font_size":"","mx4f_cat_font_line_height":"","mx4f_cat_font_style":"","mx4f_cat_font_weight":"","mx4f_cat_font_transform":"","mx4f_cat_font_spacing":"","mx4f_cat_":"","css":"","tdc_css":"","td_column_number":1,"color_preset":"","border_top":"","tdc_css_class":"td_uid_8_62787aaa7d388_rand","tdc_css_class_style":"td_uid_8_62787aaa7d388_rand_style"}';
+block_td_uid_8_62787aaa7d388.td_column_number = "1";
+block_td_uid_8_62787aaa7d388.block_type = "td_block_15";
+block_td_uid_8_62787aaa7d388.post_count = "4";
+block_td_uid_8_62787aaa7d388.found_posts = "22";
+block_td_uid_8_62787aaa7d388.header_color = "#dd9933";
+block_td_uid_8_62787aaa7d388.ajax_pagination_infinite_stop = "";
+block_td_uid_8_62787aaa7d388.max_num_pages = "6";
+tdBlocksArray.push(block_td_uid_8_62787aaa7d388);
+</script><div class="td-block-title-wrap"><h4 class="block-title td-block-title"><span class="td-pulldown-size">NEWEST VIDEOS</span></h4></div><div id="td_uid_8_62787aaa7d388" class="td_block_inner td-column-1"><div class="td-cust-row">
+
+	<div class="td-block-span12">
+
+        <div class="td_module_mx4 td_module_wrap td-animation-stack">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="https://laraveldaily.com/top-5-all-time-must-watch-videos-from-laracon/" rel="bookmark" class="td-image-wrap" title="Top 5 All-Time Must-Watch Videos from Laracon"><img class="entry-thumb td-animation-stack-type0-1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANoAAACWAQMAAACCSQSPAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAABpJREFUWMPtwQENAAAAwiD7p7bHBwwAAAAg7RD+AAGXD7BoAAAAAElFTkSuQmCC" alt="" title="Top 5 All-Time Must-Watch Videos from Laracon" data-type="image_tag" data-img-url="https://laraveldaily.com/wp-content/uploads/2019/03/top-5-laracon-videos-218x150.png" width="218" height="150"></a></div>                            </div>
+
+            <h3 class="entry-title td-module-title"><a href="https://laraveldaily.com/top-5-all-time-must-watch-videos-from-laracon/" rel="bookmark" title="Top 5 All-Time Must-Watch Videos from Laracon">Top 5 All-Time Must-Watch Videos from Laracon</a></h3>
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 -->
+
+	<div class="td-block-span12">
+
+        <div class="td_module_mx4 td_module_wrap td-animation-stack">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="https://laraveldaily.com/how-much-i-earn-from-this-laraveldaily-blog-all-numbers/" rel="bookmark" class="td-image-wrap" title="How Much I Earn From This LaravelDaily Blog [ALL NUMBERS]"><img class="entry-thumb td-animation-stack-type0-1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANoAAACWAQMAAACCSQSPAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAABpJREFUWMPtwQENAAAAwiD7p7bHBwwAAAAg7RD+AAGXD7BoAAAAAElFTkSuQmCC" alt="" title="How Much I Earn From This LaravelDaily Blog [ALL NUMBERS]" data-type="image_tag" data-img-url="https://laraveldaily.com/wp-content/uploads/2019/02/laraveldaily-revenue-218x150.png" width="218" height="150"></a></div>                            </div>
+
+            <h3 class="entry-title td-module-title"><a href="https://laraveldaily.com/how-much-i-earn-from-this-laraveldaily-blog-all-numbers/" rel="bookmark" title="How Much I Earn From This LaravelDaily Blog [ALL NUMBERS]">How Much I Earn From This LaravelDaily Blog [ALL NUMBERS]</a></h3>
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 --></div><div class="td-cust-row">
+
+	<div class="td-block-span12">
+
+        <div class="td_module_mx4 td_module_wrap td-animation-stack">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="https://laraveldaily.com/laravel-wink-package-wordpress-mini-alternative-for-laravel/" rel="bookmark" class="td-image-wrap" title="Laravel Wink Package: WordPress Mini-Alternative for Laravel?"><img class="entry-thumb td-animation-stack-type0-1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANoAAACWAQMAAACCSQSPAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAABpJREFUWMPtwQENAAAAwiD7p7bHBwwAAAAg7RD+AAGXD7BoAAAAAElFTkSuQmCC" alt="" title="Laravel Wink Package: WordPress Mini-Alternative for Laravel?" data-type="image_tag" data-img-url="https://laraveldaily.com/wp-content/uploads/2018/12/Untitled-Design-2-218x150.jpg" width="218" height="150"></a></div>                            </div>
+
+            <h3 class="entry-title td-module-title"><a href="https://laraveldaily.com/laravel-wink-package-wordpress-mini-alternative-for-laravel/" rel="bookmark" title="Laravel Wink Package: WordPress Mini-Alternative for Laravel?">Laravel Wink Package: WordPress Mini-Alternative for Laravel?</a></h3>
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 -->
+
+	<div class="td-block-span12">
+
+        <div class="td_module_mx4 td_module_wrap td-animation-stack">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="https://laraveldaily.com/eloquentfilter-package-review-process-get-query-without-if-statements/" rel="bookmark" class="td-image-wrap" title="EloquentFilter Package Review: Process GET Query Without IF Statements"><img class="entry-thumb td-animation-stack-type0-1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANoAAACWAQMAAACCSQSPAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAABpJREFUWMPtwQENAAAAwiD7p7bHBwwAAAAg7RD+AAGXD7BoAAAAAElFTkSuQmCC" alt="" title="EloquentFilter Package Review: Process GET Query Without IF Statements" data-type="image_tag" data-img-url="https://laraveldaily.com/wp-content/uploads/2018/12/Untitled-Design-2-218x150.jpg" width="218" height="150"></a></div>                            </div>
+
+            <h3 class="entry-title td-module-title"><a href="https://laraveldaily.com/eloquentfilter-package-review-process-get-query-without-if-statements/" rel="bookmark" title="EloquentFilter Package Review: Process GET Query Without IF Statements">EloquentFilter Package Review: Process GET Query Without IF Statements</a></h3>
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 --></div></div></div> <!-- ./block --><div class="clearfix"></div><div class="td_block_wrap td_block_7 td_block_widget td_uid_9_62787aaa7f7f5_rand td-pb-border-top td_block_template_1 td-column-1 td_block_padding" data-td-block-uid="td_uid_9_62787aaa7f7f5"><script>var block_td_uid_9_62787aaa7f7f5 = new tdBlock();
+block_td_uid_9_62787aaa7f7f5.id = "td_uid_9_62787aaa7f7f5";
+block_td_uid_9_62787aaa7f7f5.atts = '{"custom_title":"RANDOM ARTICLES","custom_url":"","block_template_id":"","header_color":"#","header_text_color":"#","accent_text_color":"#","m6_tl":"","limit":"8","offset":"","el_class":"","post_ids":"","category_id":"","category_ids":"","tag_slug":"","autors_id":"","installed_post_types":"","sort":"random_posts","td_ajax_filter_type":"","td_ajax_filter_ids":"","td_filter_default_txt":"All","td_ajax_preloading":"","ajax_pagination":"","ajax_pagination_infinite_stop":"","class":"td_block_widget td_uid_9_62787aaa7f7f5_rand","separator":"","f_header_font_header":"","f_header_font_title":"Block header","f_header_font_settings":"","f_header_font_family":"","f_header_font_size":"","f_header_font_line_height":"","f_header_font_style":"","f_header_font_weight":"","f_header_font_transform":"","f_header_font_spacing":"","f_header_":"","f_ajax_font_title":"Ajax categories","f_ajax_font_settings":"","f_ajax_font_family":"","f_ajax_font_size":"","f_ajax_font_line_height":"","f_ajax_font_style":"","f_ajax_font_weight":"","f_ajax_font_transform":"","f_ajax_font_spacing":"","f_ajax_":"","f_more_font_title":"Load more button","f_more_font_settings":"","f_more_font_family":"","f_more_font_size":"","f_more_font_line_height":"","f_more_font_style":"","f_more_font_weight":"","f_more_font_transform":"","f_more_font_spacing":"","f_more_":"","m6f_title_font_header":"","m6f_title_font_title":"Article title","m6f_title_font_settings":"","m6f_title_font_family":"","m6f_title_font_size":"","m6f_title_font_line_height":"","m6f_title_font_style":"","m6f_title_font_weight":"","m6f_title_font_transform":"","m6f_title_font_spacing":"","m6f_title_":"","m6f_cat_font_title":"Article category tag","m6f_cat_font_settings":"","m6f_cat_font_family":"","m6f_cat_font_size":"","m6f_cat_font_line_height":"","m6f_cat_font_style":"","m6f_cat_font_weight":"","m6f_cat_font_transform":"","m6f_cat_font_spacing":"","m6f_cat_":"","m6f_meta_font_title":"Article meta info","m6f_meta_font_settings":"","m6f_meta_font_family":"","m6f_meta_font_size":"","m6f_meta_font_line_height":"","m6f_meta_font_style":"","m6f_meta_font_weight":"","m6f_meta_font_transform":"","m6f_meta_font_spacing":"","m6f_meta_":"","css":"","tdc_css":"","td_column_number":1,"color_preset":"","border_top":"","tdc_css_class":"td_uid_9_62787aaa7f7f5_rand","tdc_css_class_style":"td_uid_9_62787aaa7f7f5_rand_style"}';
+block_td_uid_9_62787aaa7f7f5.td_column_number = "1";
+block_td_uid_9_62787aaa7f7f5.block_type = "td_block_7";
+block_td_uid_9_62787aaa7f7f5.post_count = "8";
+block_td_uid_9_62787aaa7f7f5.found_posts = "315";
+block_td_uid_9_62787aaa7f7f5.header_color = "#";
+block_td_uid_9_62787aaa7f7f5.ajax_pagination_infinite_stop = "";
+block_td_uid_9_62787aaa7f7f5.max_num_pages = "40";
+tdBlocksArray.push(block_td_uid_9_62787aaa7f7f5);
+</script><div class="td-block-title-wrap"><h4 class="block-title td-block-title"><span class="td-pulldown-size">RANDOM ARTICLES</span></h4></div><div id="td_uid_9_62787aaa7f7f5" class="td_block_inner">
+
+	<div class="td-block-span12">
+
+        <div class="td_module_6 td_module_wrap td-animation-stack">
+
+        <div class="td-module-thumb"><a href="https://laraveldaily.com/schema-builder-changing-table-columns-only-laravel-5-0/" rel="bookmark" class="td-image-wrap" title="Schema Builder: changing table columns (only Laravel 5.0+)"><img class="entry-thumb td-animation-stack-type0-1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABGAQMAAAAASKMqAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAABBJREFUKM9jGAWjYBQMKwAAA9QAAQWBn6cAAAAASUVORK5CYII=" alt="" title="Schema Builder: changing table columns (only Laravel 5.0+)" data-type="image_tag" data-img-url="" width="" height=""></a></div>
+        <div class="item-details">
+            <h3 class="entry-title td-module-title"><a href="https://laraveldaily.com/schema-builder-changing-table-columns-only-laravel-5-0/" rel="bookmark" title="Schema Builder: changing table columns (only Laravel 5.0+)">Schema Builder: changing table columns (only Laravel 5.0+)</a></h3>            <div class="td-module-meta-info">
+                                                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2015-07-16T16:53:46+00:00">July 16, 2015</time></span>                            </div>
+        </div>
+
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 -->
+
+	<div class="td-block-span12">
+
+        <div class="td_module_6 td_module_wrap td-animation-stack">
+
+        <div class="td-module-thumb"><a href="https://laraveldaily.com/class-form-not-found-in-laravel-5/" rel="bookmark" class="td-image-wrap" title="Class ‘Form’ not found in Laravel 5?"><img class="entry-thumb td-animation-stack-type0-1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABGAQMAAAAASKMqAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAABBJREFUKM9jGAWjYBQMKwAAA9QAAQWBn6cAAAAASUVORK5CYII=" alt="" data-type="image_tag" data-img-url="https://laraveldaily.com/wp-content/themes/Newspaper/images/no-thumb/td_100x70.png" width="100" height="70"></a></div>
+        <div class="item-details">
+            <h3 class="entry-title td-module-title"><a href="https://laraveldaily.com/class-form-not-found-in-laravel-5/" rel="bookmark" title="Class ‘Form’ not found in Laravel 5?">Class ‘Form’ not found in Laravel 5?</a></h3>            <div class="td-module-meta-info">
+                                                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2015-07-01T10:42:32+00:00">July 1, 2015</time></span>                            </div>
+        </div>
+
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 -->
+
+	<div class="td-block-span12">
+
+        <div class="td_module_6 td_module_wrap td-animation-stack">
+
+        <div class="td-module-thumb"><a href="https://laraveldaily.com/what-do-you-use-as-adminpanel-survey-results-quickadmin-teaser/" rel="bookmark" class="td-image-wrap" title="What do you use as Adminpanel? [Survey Results + QuickAdmin Teaser]"><img class="entry-thumb td-animation-stack-type0-1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABGAQMAAAAASKMqAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAABBJREFUKM9jGAWjYBQMKwAAA9QAAQWBn6cAAAAASUVORK5CYII=" alt="" data-type="image_tag" data-img-url="https://laraveldaily.com/wp-content/themes/Newspaper/images/no-thumb/td_100x70.png" width="100" height="70"></a></div>
+        <div class="item-details">
+            <h3 class="entry-title td-module-title"><a href="https://laraveldaily.com/what-do-you-use-as-adminpanel-survey-results-quickadmin-teaser/" rel="bookmark" title="What do you use as Adminpanel? [Survey Results + QuickAdmin Teaser]">What do you use as Adminpanel? [Survey Results + QuickAdmin Teaser]</a></h3>            <div class="td-module-meta-info">
+                                                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2016-06-01T13:29:07+00:00">June 1, 2016</time></span>                            </div>
+        </div>
+
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 -->
+
+	<div class="td-block-span12">
+
+        <div class="td_module_6 td_module_wrap td-animation-stack">
+
+        <div class="td-module-thumb"><a href="https://laraveldaily.com/send-mailchimp-email-campaigns-from-laravel/" rel="bookmark" class="td-image-wrap" title="Send Mailchimp email campaigns from Laravel"><img class="entry-thumb td-animation-stack-type0-1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABGAQMAAAAASKMqAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAABBJREFUKM9jGAWjYBQMKwAAA9QAAQWBn6cAAAAASUVORK5CYII=" alt="" data-type="image_tag" data-img-url="https://laraveldaily.com/wp-content/themes/Newspaper/images/no-thumb/td_100x70.png" width="100" height="70"></a></div>
+        <div class="item-details">
+            <h3 class="entry-title td-module-title"><a href="https://laraveldaily.com/send-mailchimp-email-campaigns-from-laravel/" rel="bookmark" title="Send Mailchimp email campaigns from Laravel">Send Mailchimp email campaigns from Laravel</a></h3>            <div class="td-module-meta-info">
+                                                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2016-05-18T15:36:05+00:00">May 18, 2016</time></span>                            </div>
+        </div>
+
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 -->
+
+	<div class="td-block-span12">
+
+        <div class="td_module_6 td_module_wrap td-animation-stack">
+
+        <div class="td-module-thumb"><a href="https://laraveldaily.com/active-current-menu-item-how-to-use-request-segment/" rel="bookmark" class="td-image-wrap" title="Active Current Menu Item: How to Use Request Segment"><img class="entry-thumb td-animation-stack-type0-1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABGAQMAAAAASKMqAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAABBJREFUKM9jGAWjYBQMKwAAA9QAAQWBn6cAAAAASUVORK5CYII=" alt="" title="Active Current Menu Item: How to Use Request Segment" data-type="image_tag" data-img-url="https://laraveldaily.com/wp-content/uploads/2018/12/Untitled-Design-2-100x70.jpg" width="100" height="70"></a></div>
+        <div class="item-details">
+            <h3 class="entry-title td-module-title"><a href="https://laraveldaily.com/active-current-menu-item-how-to-use-request-segment/" rel="bookmark" title="Active Current Menu Item: How to Use Request Segment">Active Current Menu Item: How to Use Request Segment</a></h3>            <div class="td-module-meta-info">
+                                                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2018-11-28T15:15:39+00:00">November 28, 2018</time></span>                            </div>
+        </div>
+
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 -->
+
+	<div class="td-block-span12">
+
+        <div class="td_module_6 td_module_wrap td-animation-stack">
+
+        <div class="td-module-thumb"><a href="https://laraveldaily.com/revisionable-package-log/" rel="bookmark" class="td-image-wrap" title="Revisionable: package to log who did what and when in Laravel Models"><img class="entry-thumb td-animation-stack-type0-1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABGAQMAAAAASKMqAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAABBJREFUKM9jGAWjYBQMKwAAA9QAAQWBn6cAAAAASUVORK5CYII=" alt="" data-type="image_tag" data-img-url="https://laraveldaily.com/wp-content/themes/Newspaper/images/no-thumb/td_100x70.png" width="100" height="70"></a></div>
+        <div class="item-details">
+            <h3 class="entry-title td-module-title"><a href="https://laraveldaily.com/revisionable-package-log/" rel="bookmark" title="Revisionable: package to log who did what and when in Laravel Models">Revisionable: package to log who did what and when in Laravel...</a></h3>            <div class="td-module-meta-info">
+                                                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2016-10-25T09:30:55+00:00">October 25, 2016</time></span>                            </div>
+        </div>
+
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 -->
+
+	<div class="td-block-span12">
+
+        <div class="td_module_6 td_module_wrap td-animation-stack">
+
+        <div class="td-module-thumb"><a href="https://laraveldaily.com/laravel-vouchers-package-add-discounts-to-your-project/" rel="bookmark" class="td-image-wrap" title="Laravel Vouchers Package: Add Discounts to your Project"><img class="entry-thumb td-animation-stack-type0-1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABGAQMAAAAASKMqAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAABBJREFUKM9jGAWjYBQMKwAAA9QAAQWBn6cAAAAASUVORK5CYII=" alt="" title="Laravel Vouchers Package: Add Discounts to your Project" data-type="image_tag" data-img-url="https://laraveldaily.com/wp-content/uploads/2018/12/Untitled-Design-2-100x70.jpg" width="100" height="70"></a></div>
+        <div class="item-details">
+            <h3 class="entry-title td-module-title"><a href="https://laraveldaily.com/laravel-vouchers-package-add-discounts-to-your-project/" rel="bookmark" title="Laravel Vouchers Package: Add Discounts to your Project">Laravel Vouchers Package: Add Discounts to your Project</a></h3>            <div class="td-module-meta-info">
+                                                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2019-01-07T08:14:44+00:00">January 7, 2019</time></span>                            </div>
+        </div>
+
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 -->
+
+	<div class="td-block-span12">
+
+        <div class="td_module_6 td_module_wrap td-animation-stack">
+
+        <div class="td-module-thumb"><a href="https://laraveldaily.com/create-your-own-blade-directive-example-of-br2nl-in-laravel/" rel="bookmark" class="td-image-wrap" title="Create Your Own Blade Directive: Example of br2nl in Laravel"><img class="entry-thumb td-animation-stack-type0-1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABGAQMAAAAASKMqAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAABBJREFUKM9jGAWjYBQMKwAAA9QAAQWBn6cAAAAASUVORK5CYII=" alt="extending laravel blade" title="Create Your Own Blade Directive: Example of br2nl in Laravel" data-type="image_tag" data-img-url="https://laraveldaily.com/wp-content/uploads/2019/02/extending-laravel-blade-100x70.png" width="100" height="70"></a></div>
+        <div class="item-details">
+            <h3 class="entry-title td-module-title"><a href="https://laraveldaily.com/create-your-own-blade-directive-example-of-br2nl-in-laravel/" rel="bookmark" title="Create Your Own Blade Directive: Example of br2nl in Laravel">Create Your Own Blade Directive: Example of br2nl in Laravel</a></h3>            <div class="td-module-meta-info">
+                                                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2019-02-07T10:28:56+00:00">February 7, 2019</time></span>                            </div>
+        </div>
+
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 --></div></div> <!-- ./block -->                            <div class="clearfix"></div></div>
+                        </div>
+                            </div> <!-- /.td-pb-row -->
+    </div> <!-- /.td-container -->
+</div> <!-- /.td-main-content-wrap -->
+
+<!-- Instagram -->
+
+
+
+
+	<!-- Footer -->
+	<div class="td-footer-wrapper td-container-wrap td-footer-template-13 ">
+    <div class="td-container">
+        <div class="td-pb-row">
+            <div class="td-pb-span12">
+                
+                <div class="footer-social-wrap td-social-style-2">
+                    
+            <span class="td-social-icon-wrap">
+                <a target="_blank" href="https://www.facebook.com/laraveldaily/" title="Facebook">
+                    <i class="td-icon-font td-icon-facebook"></i>
+                    <span class="td-social-name">Facebook</span>
+                </a>
+            </span>
+            <span class="td-social-icon-wrap">
+                <a target="_blank" href="https://twitter.com/dailylaravel" title="Twitter">
+                    <i class="td-icon-font td-icon-twitter"></i>
+                    <span class="td-social-name">Twitter</span>
+                </a>
+            </span>
+            <span class="td-social-icon-wrap">
+                <a target="_blank" href="https://www.youtube.com/channel/UCTuplgOBi6tJIlesIboymGA" title="Youtube">
+                    <i class="td-icon-font td-icon-youtube"></i>
+                    <span class="td-social-name">Youtube</span>
+                </a>
+            </span>                </div>
+            </div>
+        </div>
+    </div>
+</div>
+	<!-- Sub Footer -->
+	
+
+</div><!--close td-outer-wrap-->
+
+
+
+    <!--
+
+        Theme: Newspaper by tagDiv.com 2017
+        Version: 9.2 (rara)
+        Deploy mode: deploy
+        
+        uid: 62787aaa82516
+    -->
+
+    
+<!-- Custom css from theme panel -->
+<style type="text/css" media="screen">
+/* custom css theme panel */
+.td-post-content img {
+    border: 1px solid #ccc;
+}
+
+.td-post-content a {
+    text-decoration: underline;
+}
+
+code {
+    padding: 2px 0 !important;
+    font-size: 16px;
+}
+</style>
+
+<script type="text/javascript" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/tagdiv_theme.min.js.download"></script>
+<script type="text/javascript" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/comment-reply.min.js.download"></script>
+<script type="text/javascript" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/wp-embed.min.js.download"></script>
+<script async="async" type="text/javascript" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/form.js.download"></script>
+
+<!-- JS generated by theme -->
+
+<script>
+    
+
+	
+
+		(function(){
+			var html_jquery_obj = jQuery('html');
+
+			if (html_jquery_obj.length && (html_jquery_obj.is('.ie8') || html_jquery_obj.is('.ie9'))) {
+
+				var path = 'https://laraveldaily.com/wp-content/themes/Newspaper/style.css';
+
+				jQuery.get(path, function(data) {
+
+					var str_split_separator = '#td_css_split_separator';
+					var arr_splits = data.split(str_split_separator);
+					var arr_length = arr_splits.length;
+
+					if (arr_length > 1) {
+
+						var dir_path = 'https://laraveldaily.com/wp-content/themes/Newspaper';
+						var splited_css = '';
+
+						for (var i = 0; i < arr_length; i++) {
+							if (i > 0) {
+								arr_splits[i] = str_split_separator + ' ' + arr_splits[i];
+							}
+							//jQuery('head').append('<style>' + arr_splits[i] + '</style>');
+
+							var formated_str = arr_splits[i].replace(/\surl\(\'(?!data\:)/gi, function regex_function(str) {
+								return ' url(\'' + dir_path + '/' + str.replace(/url\(\'/gi, '').replace(/^\s+|\s+$/gm,'');
+							});
+
+							splited_css += "<style>" + formated_str + "</style>";
+						}
+
+						var td_theme_css = jQuery('link#td-theme-css');
+
+						if (td_theme_css.length) {
+							td_theme_css.after(splited_css);
+						}
+					}
+				});
+			}
+		})();
+
+	
+	
+</script>
+
+<script type="text/javascript">
+    (function($) // Comment Mail™ subscr. options.
+    {
+        'use strict'; // Strict standards.
+
+        $(document).ready(
+            function() // On DOM ready handler.
+            {
+                var $subOps = $('.comment-sub-ops'),
+                    $subType, $subDeliver; // Initialize vars.
+
+                if($subOps.data('auto') === 'position') $subOps.prevUntil('form')
+                    .each(function(/* Auto-position subscription options. */)
+                          {
+                              var $this = $(this); // Cache this.
+                              if($this.find(':input[type="submit"]').length)
+                              {
+                                  $subOps.remove(), $this.before($subOps);
+                                  return false; // Break the each() loop.
+                              }
+                          });
+                $subOps = $('.comment-sub-ops'),
+                    $subType = $subOps.find('select.cso-sub-type'),
+                    $subDeliver = $subOps.find('select.cso-sub-deliver');
+
+                $subType.on('change', function()
+                {
+                    if($(this).val() === '')
+                        $subDeliver.attr('disabled', 'disabled');
+                    else $subDeliver.removeAttr('disabled');
+                })
+                    .trigger('change');
+            });
+    })(jQuery);
+</script>
+<script type="text/javascript" charset="utf-8" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/popup.js.download"></script><script type="text/javascript" src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/embed.js.download" data-dojo-config="usePlainJson: true, isDebug: false"></script><script type="text/javascript">window.dojoRequire(["mojo/signup-forms/Loader"], function(L) { L.start({"baseUrl":"mc.us11.list-manage.com","uuid":"a459401212599a54203d036ee","lid":"91c1337873","uniqueMethods":true}) })</script>
+
+
+<div id="PopupSignupForm_0" widgetid="PopupSignupForm_0">
+    <!-- MC BANNER -->
+    <div class="mc-banner" data-dojo-attach-point="bannerContainer" style="display: block;">
+        <div class="mc-layout__bannerContent">
+            <iframe src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/saved_resource.html" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="width: 100%; height: 116px;" data-dojo-attach-point="iframeBannerContainer"></iframe>
+        </div>
+    </div>
+
+    <!-- MC MODAL -->
+    <div class="mc-modal" data-dojo-attach-point="modalContainer" style="display: block; opacity: 1;">
+        <div class="mc-closeModal" style="display:block !important;" data-action="close-mc-modal" data-dojo-attach-point="modalClose"></div>
+        <div class="mc-layout__modalContent" style="max-height: 269px;">
+            <iframe src="./Differences_ $request-_get() vs $request-_input() vs request() vs get_data() - Laravel Daily_files/saved_resource(1).html" frameborder="0" marginwidth="0" marginheight="0" style="width: 100%; height: 269px;" data-dojo-attach-point="iframeModalContainer"></iframe>
+        </div>
+    </div>
+
+    <!-- MC MODAL OVERLAY -->
+    <div class="mc-modal-bg" data-dojo-attach-point="modalOverlay" style="display: block; opacity: 0.65;"></div>
+</div></body><loom-container id="lo-engage-ext-container"><loom-shadow classname="resolved"></loom-shadow></loom-container><loom-container id="lo-companion-container"><loom-shadow classname="resolved"></loom-shadow></loom-container></html>
